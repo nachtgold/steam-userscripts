@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Steam developer or curator or publisher bulk ignore
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://store.steampowered.com/curator*
@@ -25,6 +25,10 @@
     tabs.appendChild(ignore_button);
 
     ignore_button.onclick = function(event) {
+        let hide_ignored = document.querySelectorAll('.recommendation a.store_capsule.ds_ignored');
+        hide_ignored = [...hide_ignored].map(e => e.parentElement.parentElement);
+        hide_ignored.forEach(e => e.remove());
+
         const link = document.querySelector('.recommendation a.store_capsule:not(.ds_ignored)');
         if(!!link) {
             const recommendation = link.closest('.recommendation');
